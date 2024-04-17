@@ -1,5 +1,5 @@
 ###############################################################################
-# TODO: 1. (3 pts)
+# DONE: 1. (3 pts)
 #
 #   For this module, we are going to create a basic program to handle movie
 #   times at a movie theater. For our purposes, a movie is going to be defined
@@ -28,9 +28,43 @@
 #
 #   Once you have done this, then change the above _TODO_ to DONE.
 ###############################################################################
+def show_movies(movies):
+    print("Movies:")
+    for movie in movies:
+        print(f"Title: {movie['title']}")
+        print(f"Duration: {movie['duration']} minutes")
+        print(f"Start Time: {movie['start_time']}")
+        print(f"Theater: {movie['theater_num']}")
+        print(f"Tickets Available: {movie['num_of_tickets']}")
+        print()
 
+movies = [
+    {
+        'title': 'Braveheart',
+        'duration': 170,
+        'start_time': '2:15 PM',
+        'theater_num': 8,
+        'num_of_tickets': 20
+    },
+    {
+        'title': 'The Shawshank Redemption',
+        'duration': 142,
+        'start_time': '4:30 PM',
+        'theater_num': 5,
+        'num_of_tickets': 15
+    },
+    {
+        'title': 'The Godfather',
+        'duration': 175,
+        'start_time': '7:00 PM',
+        'theater_num': 3,
+        'num_of_tickets': 10
+    }
+]
+
+show_movies(movies)
 ###############################################################################
-# TODO: 2. (3 pts)
+# DONE: 2. (3 pts)
 #
 #   For this _todo_, write a function called get_ticket() that takes one
 #   parameter:
@@ -51,7 +85,12 @@
 #
 #   Once you have done this, then change the above _TODO_ to DONE.
 ###############################################################################
-
+def get_ticket(movie):
+    if movie['num_of_tickets'] > 0:
+        movie['num_of_tickets'] -= 1
+        print(f"Success! You now have a ticket for {movie['title']}!")
+    else:
+        print("There are currently no tickets available for that movie.")
 ###############################################################################
 # TODO: 3. (9 pts)
 #
@@ -83,3 +122,43 @@
 #
 #   Once you have done this, then change the above _TODO_ to DONE.
 ###############################################################################
+def main():
+    print("Welcome to the Movie Theater!")
+    movies = []
+
+    while True:
+        title = input("Enter movie title (or 'end' to stop): ")
+        if title.lower() == 'end':
+            break
+        
+        duration = int(input("Enter duration in minutes: "))
+        start_time = input("Enter start time (e.g., '2:15 PM'): ")
+        theater_num = int(input("Enter theater number: "))
+        num_of_tickets = int(input("Enter number of tickets available: "))
+        
+        movie = {
+            'title': title,
+            'duration': duration,
+            'start_time': start_time,
+            'theater_num': theater_num,
+            'num_of_tickets': num_of_tickets
+        }
+        movies.append(movie)
+    
+    show_movies(movies)
+    
+    while True:
+        choice = input("Which movie would you like to buy a ticket for? (or 'end' to stop): ")
+        if choice.lower() == 'end':
+            break
+        
+        for movie in movies:
+            if movie['title'].lower() == choice.lower():
+                get_ticket(movie)
+                break
+        else:
+            print("Movie not found. Please try again.")
+        
+        show_movies(movies)
+
+main() 
